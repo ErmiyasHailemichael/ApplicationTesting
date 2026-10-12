@@ -1,0 +1,81 @@
+## Testing Concepts & Examples
+- **Root Cause:** The programmer seems like new to JS and might luck deep understanding of how baisc rules and syntax work yet.
+- **Error:** The developer mistakenly typed an assignment operator (`=`) instead of a colon (`:`) when writting an object.
+- **Defect:** he code looks for the word `name` instead of the actual food name, can't find it, and just deletes the last item on the list anyway.
+- **Failure:** When you try to run the code to get the total, the app crashes and shows an error message.
+
+------------------
+
+## issue log
+
+- **Location:** `src/receipt.ts`, Lines 8–14
+- **Issue:** Unexported `ITEMS` array
+- **Explanation:** `ITEMS` is declared with `const ITEMS = [...]` without the `export` keyword, making it inaccessible to external test suites and modules.
+- **Suggested Fix:** Add the `export` keyword: `export const ITEMS = [...]`.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 12
+- **Issue:** Sparse array (dangling comma)
+- **Explanation:** A trailing comma with no element between `eggs` and `avocado oil` creates an empty slot (`undefined`) in the array.
+- **Suggested Fix:** Remove the extra comma to maintain a dense array of objects.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 17
+- **Issue:** Invalid object literal assignment syntax
+- **Explanation:** Object keys and values are separated by an assignment operator (`=`) instead of a colon (`:`), causing a fatal parser syntax error.
+- **Suggested Fix:** Change `{ "name" = name, "price" = price }` to `{ name, price }` or `{ name: name, price: price }`.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 22
+- **Issue:** Literal string lookup on object array
+- **Explanation:** `ITEMS.indexOf("name")` searches for the literal string `"name"` inside an array of objects. It never matches and always returns `-1`.
+- **Suggested Fix:** Use `ITEMS.findIndex(item => item.name === name)` to search by property.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 23
+- **Issue:** Incorrect deletion method
+- **Explanation:** `ITEMS.pop()` unconditionally removes the last item in the array regardless of the item specified in the function argument.
+- **Suggested Fix:** Use `if (idx !== -1) ITEMS.splice(idx, 1);` to remove only the matched element.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 27
+- **Issue:** Missing `subtotal()` function per requirements
+- **Explanation:** The lab requirements state that subtotal must be calculated without tax, but the function is named `total()` and lacks a `subtotal` export.
+- **Suggested Fix:** Rename the function to `subtotal()`.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 28
+- **Issue:** Attempting to iterate over a non-iterable primitive number
+- **Explanation:** `for (const i of 3)` attempts to iterate over the number `3`, throwing a runtime `TypeError: 3 is not iterable`.
+- **Suggested Fix:** Iterate over the actual collection using `for (const item of ITEMS)` or `ITEMS.reduce(...)`.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 29
+- **Issue:** Function identifier shadowing and reassignment
+- **Explanation:** `total = total + ...` attempts to reassign the function identifier itself inside its own body rather than accumulating into a variable.
+- **Suggested Fix:** Initialize a separate local accumulator variable (e.g., `let sum = 0;`) and return that sum.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 34
+- **Issue:** Incorrect tax calculation logic and signature mismatch
+- **Explanation:** Function `tax(taxRate)` calculates `total() + taxRate` (adding the tax rate as a flat dollar amount rather than multiplying by subtotal). Additionally, requirement 4 calls for calculating the total with tax.
+- **Suggested Fix:** Implement `total(taxRate)` that calculates and returns `subtotal + (subtotal * taxRate)`.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Lines 43–45
+- **Issue:** Incorrect iteration variable usage and disabled string interpolation
+- **Explanation:** `for (const i of ITEMS)` assigns each item object to `i`, but `ITEMS[i]` treats the object as an array index. The line also uses single quotes (`'...'`), preventing template string interpolation.
+- **Suggested Fix:** Loop directly with `for (const item of ITEMS)` and use backticks: `` `${item.name} :$\${item.price.toFixed(2)}` ``.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Line 48
+- **Issue:** Uninvoked function reference printed
+- **Explanation:** `\${String(total)}` prints the function definition string rather than calling the calculation.
+- **Suggested Fix:** Invoke the calculation function: `` `\${subtotal().toFixed(2)}` ``.
+- **Status:** Fixed
+------------------
+- **Location:** `src/receipt.ts`, Lines 49–50
+- **Issue:** Mismatched string quotation marks
+- **Explanation:** The template literal begins with a backtick (`` ` ``) but terminates with a double quote (`"`), causing a compile/parse error. It also passes a string into a function expecting a number.
+- **Suggested Fix:** Use matching backticks throughout and pass numeric values directly.
+- **Status:** Fixed
