@@ -1,3 +1,8 @@
+## Team members:
+ - Ermiyas Hailemichael
+ - Asma Begum
+ ------------------
+ ## issue log
 - **Location:** Line 8
 - **Issue:** `BALANCE` is represented as an array rather than a numerical value.
 - **Explanation:** `[15,983]` represents an array of two integers because of the `,` inside the array.
