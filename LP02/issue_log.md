@@ -1,0 +1,53 @@
+- **Location:** Line 8
+- **Issue:** `BALANCE` is represented as an array rather than a numerical value.
+- **Explanation:** `[15,983]` represents an array of two integers because of the `,` inside the array.
+- **Suggested Fix:** Declare balance as mutable number: `let balance: number = 15983;`
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 12-20 (deposit function)
+- **Issue:** The parameter for balance is misleading and global balance is never updated.
+- **Explanation:** The parameter is named `balance` instead of `amount` which makes the parameter confusing. The expression ` balance = BALANCE + balance;` only reassigns the local paramter variable and does not update the account.
+- **Suggested Fix:** Rename the parameter to `amount: number` and update the global balance variable.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 23-31 (withdrawl function)
+- **Issue:** Function name is misspelled and function uses undefined variable.
+- **Explanation:** The function name `withdrawl` is misspelled. On line 25 reference `balance`, which is not declared in scope ( the function parameter is named amaount) which result in a reference error.
+- **Suggested Fix:** Rename function to `withdrawal`. Replace the body with logic using `amount` such as substracting `amount` from the global balance.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 23-31 (withdrawl function)
+- **Issue:** Withdrawals add funds instead of substracting them and lack balance overdraft protection.
+- **Explanation:** The operation uses addition(+) rather than substraction(-). It also viloted the program requirement of a user's balance should never become negative. 
+- **Suggested Fix:** Verify that `amount > 0` and `amount <= currentBalance` before subtracting `amount` from the balance. Return an error message if funds are insufficient.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 34-37
+- **Issue:** Missing required PIN validation.
+- **Explanation:** One of the requirements of the program states " A PIN must be provided during every action." `balanceChec` function takes no arguments and allow unrestricted access to the balance.
+- **Suggested Fix:** Add a `pin: number` parameter and require `pin === USER_PIN` before returning the balance.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 36
+- **Issue:** Unreachable code after the return statement.
+- **Explanation:** `console.log(...)` is placed directly after `return Balance;`, making it unreachable code that will never execute.
+- **Suggested Fix:** Place the `console.log(...)` before the return statement.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 40-42
+- **Issue:** Typo in parameter name `reciver`.
+- **Explanation:** The parameter name is misspelled as `reciver` instead of `receiver`.
+- **Suggested Fix:** Rename the parameter to `receiver: string`.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 40
+- **Issue:** Incorrect argument delegation and missing PIN verification.
+- **Explanation:** `withdrawl` expects two arguments `(pin, amonunt)`, but `transfer` calls `withdrawl(amount)`, passing the transfer amount as the PIN and leaving the withdrawal amount `undefined`.
+- **Suggested Fix:** Pass both `pin` and `amount` to the withdrawal function. Verify the withdrawal succeeded before announcing transfer success.
+- **Status:** Ongoing
+--------------------------
+- **Location:** Line 43
+- **Issue:** Returns a function reference instead of invoking the function.
+- **Explanation:** `return balanceCheck;` returns the function object rather than calling it and returning the current balance value.
+- **Suggested Fix:** Call the function directly with parentheses and the reuired PIN argument: `return balanceCheck(pin)`.
+- **Status:** Ongoing
