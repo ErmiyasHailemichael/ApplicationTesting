@@ -77,7 +77,6 @@ describe("Receipt & Grocery List Tests", () => {
   describe("total (with tax)", () => {
     // Happy-path
     test("calculates the total including a standard tax rate", () => {
-      // Subtotal 47.49 * 1.08 = 51.2892 -> ~51.29
       expect(total(0.08)).toBeCloseTo(51.29, 2);
     });
 
