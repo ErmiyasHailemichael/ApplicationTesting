@@ -53,7 +53,7 @@ Based on my experience with booking websites, I think these things might go wron
 | The form rejects a date in the past | **Failed** | 2026-11-01 was accepted. This assumes past bookings should not be allowed. |
 | Bookings are still there after refreshing the page | **Failed** | All bookings disappeared after refresh. |
 | Multiple bookings appear in the list together | **Passed** | Several bookings were listed at once. |
-| The form rejects an empty date | **Unable to Test** | Not tested yet. |
+| The form rejects an empty date | **Passed** | Beachfront Condo with 1 guest and no date showed "Please fill out this field" and did not submit. |
 
 </details>
 
