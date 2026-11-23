@@ -73,4 +73,4 @@
 
 ## AI Transparency
 
-AI (Claude) was used to run the manual tests in a browser and to help draft and format this document. The test results above were observed in the running application.
+AI was used to help create portions of this file and to clean up its writing and formatting.
